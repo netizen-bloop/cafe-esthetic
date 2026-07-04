@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kopi & Co. | Pesan & Nilai</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Plus Jakarta Sans for a clean, modern look -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        cafe: {
+                            50: '#fdf8f5',
+                            100: '#fbeee6',
+                            200: '#f5dacb',
+                            600: '#c17a52',
+                            700: '#a35f38',
+                            800: '#7c4627',
+                            900: '#4a2511',
+                            dark: '#1c1917',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c17a52;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-cafe-50 text-stone-800 antialiased min-h-screen flex flex-col">
+
+    <!-- NAVIGATION BAR -->
+    <header class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-stone-100">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="flex items-center space-x-2">
+                <span class="p-2 bg-cafe-900 text-white rounded-xl shadow-md shadow-cafe-900/10">
+                    <i class="fa-solid fa-mug-hot text-lg"></i>
+                </span>
+                <span class="font-extrabold text-xl tracking-tight text-cafe-900">Kopi&Co.</span>
+            </a>
+
+            <!-- Quick Navigation Buttons -->
+            <div class="flex items-center space-x-4">
+                <a href="#menu-section" class="text-sm font-semibold text-stone-600 hover:text-cafe-700 transition">Menu</a>
+                <a href="#review-section" class="text-sm font-semibold text-stone-600 hover:text-cafe-700 transition">Ulasan</a>
+                
+                <!-- Cart Trigger Button -->
+                <button onclick="toggleCartDrawer()" class="relative p-2.5 bg-cafe-100 hover:bg-cafe-200 text-cafe-900 rounded-xl transition duration-300 flex items-center justify-center">
+                    <i class="fa-solid fa-shopping-bag text-lg"></i>
+                    <span id="cart-badge" class="absolute -top-1.5 -right-1.5 bg-cafe-700 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white scale-0 transition-transform duration-300">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- HERO SECTION -->
+        <section class="max-w-6xl mx-auto px-4 sm:px-6 py-8 md:py-16 grid md:grid-cols-2 gap-8 items-center">
+            <div class="space-y-6">
+                <span class="inline-block px-3 py-1 bg-cafe-100 text-cafe-800 text-xs font-bold rounded-full uppercase tracking-wider">Premium & Segar</span>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-stone-900 leading-tight">
+                    Satu Klik, <br>
+                    <span class="text-cafe-700">Kopi Hangat</span> <br>
+                    Di Tangan Anda.
+                </h1>
+                <p class="text-stone-500 max-w-sm text-sm sm:text-base leading-relaxed">
+                    Sistem pesanan mudah alih yang pantas. Pilih kegemaran anda, pesan sekarang, dan tinggalkan penilaian ikhlas anda.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-3 pt-2">
+                    <a href="#menu-section" class="px-6 py-3.5 bg-cafe-900 hover:bg-cafe-800 text-white font-semibold rounded-xl text-center shadow-lg shadow-cafe-900/20 transition duration-300 flex items-center justify-center space-x-2">
+                        <span>Pesan Sekarang</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </a>
+                    <a href="#review-section" class="px-6 py-3.5 bg-white hover:bg-stone-50 text-stone-700 border border-stone-200 font-semibold rounded-xl text-center transition duration-300 flex items-center justify-center space-x-2">
+                        <span>Beri Ulasan</span>
+                        <i class="fa-regular fa-star text-xs"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Hero Image Visual Banner -->
+            <div class="relative h-[280px] sm:h-[350px] md:h-[400px] rounded-2xl overflow-hidden shadow-2xl">
+                <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&q=80&w=1000" 
+                     onerror="this.src='https://placehold.co/1000x800/7c4627/ffffff?text=Kopi+Co'" 
+                     alt="Cafe vibes" 
+                     class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent flex items-end p-6">
+                    <div class="text-white">
+                        <p class="text-xs uppercase tracking-wider font-bold opacity-80">Brew of the day</p>
+                        <h3 class="text-lg font-bold">Signature Latte • RM 12.00</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MENU SECTION -->
+        <section id="menu-section" class="max-w-6xl mx-auto px-4 sm:px-6 py-12 border-t border-stone-200">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-stone-900">Pilih Menu Anda</h2>
+                    <p class="text-stone-500 text-xs sm:text-sm mt-1">Dibuat segar mengikut pesanan anda. <span class="text-cafe-700 font-semibold">(Klik gambar menu untuk memesan)</span></p>
+                </div>
+                
+                <!-- Category Filter Pills -->
+                <div class="flex flex-wrap gap-2" id="category-filters">
+                    <button onclick="filterMenu('semua')" class="cat-btn px-4 py-2 text-xs font-bold rounded-xl bg-cafe-900 text-white transition duration-300" data-cat="semua">Semua</button>
+                    <button onclick="filterMenu('kopi')" class="cat-btn px-4 py-2 text-xs font-bold rounded-xl bg-white text-stone-600 hover:bg-stone-100 border border-stone-200 transition duration-300" data-cat="kopi">Kopi</button>
+                    <button onclick="filterMenu('bukan-kopi')" class="cat-btn px-4 py-2 text-xs font-bold rounded-xl bg-white text-stone-600 hover:bg-stone-100 border border-stone-200 transition duration-300" data-cat="bukan-kopi">Bukan Kopi</button>
+                    <button onclick="filterMenu('snek')" class="cat-btn px-4 py-2 text-xs font-bold rounded-xl bg-white text-stone-600 hover:bg-stone-100 border border-stone-200 transition duration-300" data-cat="snek">Makanan & Snek</button>
+                </div>
+            </div>
+
+            <!-- Menu Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="menu-container">
+                <!-- Javascript will render menu items dynamically here -->
+            </div>
+        </section>
+
+        <!-- REVIEWS & RATING SECTION -->
+        <section id="review-section" class="bg-white border-y border-stone-200 py-16">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 grid md:grid-cols-12 gap-10">
+                
+                <!-- Review Form -->
+                <div class="md:col-span-5 space-y-6">
+                    <div>
+                        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-stone-900">Nilai Kami</h2>
+                        <p class="text-stone-500 text-xs sm:text-sm mt-1">Ulasan ringkas anda amat membantu kami memperbaiki mutu sajian.</p>
+                    </div>
+
+                    <form id="review-form" onsubmit="handleReviewSubmit(event)" class="space-y-4 bg-cafe-50 p-6 rounded-2xl border border-cafe-100">
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-stone-600 mb-1">Nama Anda</label>
+                            <input type="text" id="reviewer-name" required placeholder="Masukkan nama" class="w-full px-4 py-2.5 rounded-xl border border-stone-200 bg-white text-stone-800 text-sm focus:outline-none focus:ring-2 focus:ring-cafe-600 focus:border-transparent transition">
+                        </div>
+
+                        <!-- Interactive Stars Picker -->
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-stone-600 mb-1">Penarafan (Rating)</label>
+                            <div class="flex space-x-2 text-2xl text-stone-300" id="rating-star-container">
+                                <button type="button" onclick="setRating(1)" class="star-btn hover:scale-110 transition"><i class="fa-solid fa-star"></i></button>
+                                <button type="button" onclick="setRating(2)" class="star-btn hover:scale-110 transition"><i class="fa-solid fa-star"></i></button>
+                                <button type="button" onclick="setRating(3)" class="star-btn hover:scale-110 transition"><i class="fa-solid fa-star"></i></button>
+                                <button type="button" onclick="setRating(4)" class="star-btn hover:scale-110 transition"><i class="fa-solid fa-star"></i></button>
+                                <button type="button" onclick="setRating(5)" class="star-btn hover:scale-110 transition"><i class="fa-solid fa-star"></i></button>
+                            </div>
+                            <input type="hidden" id="selected-rating" value="5">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-stone-600 mb-1">Ulasan Ringkas</label>
+                            <textarea id="reviewer-text" rows="3" required placeholder="Suka dengan minuman/snek tadi? Kongsikan di sini..." class="w-full px-4 py-2.5 rounded-xl border border-stone-200 bg-white text-stone-800 text-sm focus:outline-none focus:ring-2 focus:ring-cafe-600 focus:border-transparent transition resize-none"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-3 bg-cafe-900 hover:bg-cafe-800 text-white font-semibold rounded-xl text-sm transition duration-300 shadow-md">
+                            Hantar Ulasan
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Reviews Feed -->
+                <div class="md:col-span-7 space-y-6">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-xl font-bold text-stone-900">Ulasan Pelanggan</h3>
+                        <div class="flex items-center space-x-2 bg-cafe-100 text-cafe-900 px-3 py-1.5 rounded-full text-xs font-bold">
+                            <i class="fa-solid fa-star text-amber-500"></i>
+                            <span id="average-rating-badge">4.8 / 5.0</span>
+                        </div>
+                    </div>
+
+                    <!-- Reviews Scrollbox -->
+                    <div class="space-y-4 max-h-[450px] overflow-y-auto pr-2" id="reviews-feed">
+                        <!-- Dynamic Reviews Rendered here -->
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- SLIDE-OVER CART DRAWER -->
+    <div id="cart-drawer" class="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-white shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out border-l border-stone-100 flex flex-col">
+        <!-- Drawer Header -->
+        <div class="p-4 border-b border-stone-100 flex justify-between items-center bg-stone-50">
+            <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-shopping-basket text-cafe-700"></i>
+                <h3 class="font-bold text-stone-900">Troli Pesanan</h3>
+            </div>
+            <button onclick="toggleCartDrawer()" class="p-2 text-stone-400 hover:text-stone-700 transition">
+                <i class="fa-solid fa-times text-lg"></i>
+            </button>
+        </div>
+
+        <!-- Drawer Content (Items List) -->
+        <div class="flex-grow overflow-y-auto p-4 space-y-3" id="cart-items-container">
+            <!-- Empty state fallback inside -->
+        </div>
+
+        <!-- Drawer Footer (Calculations & Checkout) -->
+        <div class="p-4 border-t border-stone-100 bg-stone-50 space-y-3">
+            <div class="flex justify-between text-sm font-semibold text-stone-600">
+                <span>Subjumlah</span>
+                <span id="cart-subtotal">RM 0.00</span>
+            </div>
+            <div class="flex justify-between text-sm font-semibold text-stone-600">
+                <span>Caj Servis (0%)</span>
+                <span>Percuma</span>
+            </div>
+            <div class="h-px bg-stone-200"></div>
+            <div class="flex justify-between text-base font-bold text-stone-900">
+                <span>Jumlah Keseluruhan</span>
+                <span id="cart-total" class="text-cafe-700">RM 0.00</span>
+            </div>
+
+            <button onclick="triggerCheckout()" id="checkout-btn" class="w-full mt-2 py-3 bg-cafe-900 hover:bg-cafe-800 disabled:bg-stone-300 disabled:cursor-not-allowed text-white font-bold rounded-xl text-center shadow-lg transition duration-300">
+                Sahkan & Bayar Sekarang
+            </button>
+        </div>
+    </div>
+
+    <!-- Backdrop Overlay for Cart -->
+    <div id="drawer-overlay" onclick="toggleCartDrawer()" class="fixed inset-0 bg-black/40 backdrop-blur-xs z-40 hidden transition-opacity duration-300"></div>
+
+    <!-- CUSTOMIZE ORDER MODAL -->
+    <div id="customize-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs hidden">
+        <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden shadow-2xl border border-stone-100 scale-95 transition-transform duration-300 flex flex-col" id="customize-modal-content">
+            <!-- Modal Image Header -->
+            <div class="relative h-48 bg-stone-100">
+                <img id="cust-item-image" src="" alt="Menu item" class="w-full h-full object-cover">
+                <button onclick="closeCustomizeModal()" class="absolute top-3 right-3 w-8 h-8 bg-black/40 text-white rounded-full flex items-center justify-center hover:bg-black/60 transition">
+                    <i class="fa-solid fa-times text-sm"></i>
+                </button>
+            </div>
+            
+            <div class="p-6 space-y-4 max-h-[70vh] overflow-y-auto">
+                <div>
+                    <div class="flex justify-between items-start gap-2">
+                        <h3 id="cust-item-name" class="text-xl font-bold text-stone-900">Nama Menu</h3>
+                        <span id="cust-item-price" class="text-cafe-700 font-extrabold text-lg whitespace-nowrap">RM 0.00</span>
+                    </div>
+                    <p id="cust-item-desc" class="text-xs text-stone-500 mt-1 leading-relaxed">Penerangan ringkas menu akan dipaparkan di sini.</p>
+                </div>
+
+                <hr class="border-stone-100">
+
+                <!-- Dynamic Extra Options (Nasi Lebih & Lauk Lebih) -->
+                <div class="space-y-2.5">
+                    <span class="block text-xs font-bold uppercase tracking-wider text-stone-600">Pilihan Tambahan (Add-ons)</span>
+                    <div class="grid grid-cols-1 gap-2">
+                        <!-- Option 1: Nasi Lebih -->
+                        <label class="flex items-center justify-between p-3 bg-stone-50 hover:bg-stone-100/70 border border-stone-200 rounded-xl cursor-pointer transition select-none">
+                            <div class="flex items-center space-x-3">
+                                <input type="checkbox" id="opt-nasi-lebih" onchange="updateModalPrice()" class="w-4 h-4 text-cafe-700 border-stone-300 rounded focus:ring-cafe-600 focus:ring-2 accent-cafe-700">
+                                <span class="text-xs font-semibold text-stone-700">Nasi Lebih</span>
+                            </div>
+                            <span class="text-xs font-bold text-cafe-700">+ RM 1.00</span>
+                        </label>
+                        <!-- Option 2: Lauk/Sambal/Kuah Lebih -->
+                        <label class="flex items-center justify-between p-3 bg-stone-50 hover:bg-stone-100/70 border border-stone-200 rounded-xl cursor-pointer transition select-none">
+                            <div class="flex items-center space-x-3">
+                                <input type="checkbox" id="opt-lauk-lebih" onchange="updateModalPrice()" class="w-4 h-4 text-cafe-700 border-stone-300 rounded focus:ring-cafe-600 focus:ring-2 accent-cafe-700">
+                                <span class="text-xs font-semibold text-stone-700">Lauk / Sambal / Kuah Lebih</span>
+                            </div>
+                            <span class="text-xs font-bold text-cafe-700">+ RM 2.00</span>
+                        </label>
+                    </div>
+                </div>
+
+                <hr class="border-stone-100">
+
+                <!-- Quantity Selector -->
+                <div class="flex items-center justify-between">
+                    <span class="text-sm font-semibold text-stone-700">Kuantiti</span>
+                    <div class="flex items-center space-x-3">
+                        <button onclick="adjustCustomizeQty(-1)" class="w-8 h-8 bg-stone-100 hover:bg-stone-200 rounded-lg text-sm font-bold flex items-center justify-center transition">-</button>
+                        <span id="cust-qty" class="text-sm font-bold text-stone-800 w-6 text-center">1</span>
+                        <button onclick="adjustCustomizeQty(1)" class="w-8 h-8 bg-stone-100 hover:bg-stone-200 rounded-lg text-sm font-bold flex items-center justify-center transition">+</button>
+                    </div>
+                </div>
+
+                <!-- Customer Note -->
+                <div class="space-y-1.5">
+                    <label for="cust-note" class="block text-xs font-bold uppercase tracking-wider text-stone-600">Nota Khas (Cth: kurang manis, tanpa ais)</label>
+                    <textarea id="cust-note" rows="2" placeholder="Tulis permintaan anda di sini (pilihan)..." class="w-full px-3 py-2 text-sm rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-cafe-600 focus:border-transparent transition resize-none"></textarea>
+                </div>
+
+                <!-- Action Button -->
+                <button onclick="confirmAddToCart()" class="w-full py-3 bg-cafe-900 hover:bg-cafe-800 text-white font-bold rounded-xl text-sm transition duration-300 shadow-md">
+                    Tambah Ke Troli
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MOCK CHECKOUT SUCCESS MODAL -->
+    <div id="checkout-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs hidden">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 text-center shadow-2xl border border-stone-100 scale-95 transition-transform duration-300" id="checkout-modal-content">
+            <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce">
+                <i class="fa-solid fa-check text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-extrabold text-stone-900 mb-2">Pesanan Diterima!</h3>
+            <p class="text-xs sm:text-sm text-stone-500 mb-6">Sila tunjukkan skrin ini di kaunter untuk mengambil hidangan anda.</p>
+            
+            <div class="bg-stone-50 p-4 rounded-xl text-left border border-stone-100 mb-6 space-y-2">
+                <div class="flex justify-between text-xs">
+                    <span class="text-stone-400">No. Pesanan:</span>
+                    <span class="font-bold text-stone-800" id="receipt-order-id">#KC-4893</span>
+                </div>
+                <div class="flex justify-between text-xs">
+                    <span class="text-stone-400">Total Dibayar:</span>
+                    <span class="font-bold text-cafe-700" id="receipt-total-paid">RM 0.00</span>
+                </div>
+            </div>
+
+            <button onclick="closeCheckoutModal()" class="w-full py-2.5 bg-cafe-900 hover:bg-cafe-800 text-white font-semibold rounded-xl text-sm transition">
+                Selesai & Tutup
+            </button>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-cafe-dark text-stone-400 py-8 text-center text-xs sm:text-sm border-t border-stone-800">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-2">
+                <span class="p-1.5 bg-white/10 text-white rounded-lg">
+                    <i class="fa-solid fa-mug-hot"></i>
+                </span>
+                <span class="font-bold text-white tracking-wide">Kopi&Co.</span>
+            </div>
+            <p>© 2026 Kopi&Co. Hak Cipta Terpelihara. Mudah & Pantas.</p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Cafe Menu Data List
+        const MENU_DATA = [
+            {
+                id: 'm1',
+                name: 'Nasi Lemak Ayam Goreng',
+                category: 'snek',
+                price: 15.00,
+                desc: 'Nasi lemak wangi pandan bersantan pekat, dihidang bersama ayam goreng berempah panas, telur, timun dan sambal bilis manis pedas.',
+                image: 'https://images.unsplash.com/photo-1632161754117-036130b92db9?auto=format&fit=crop&q=80&w=400',
+                rating: 4.9
+            },
+            {
+                id: 'm2',
+                name: 'Mee Goreng Mamak Special',
+                category: 'snek',
+                price: 11.50,
+                desc: 'Mee kuning digoreng basah bersama telur hancur, tauhu goreng, ubi kentang rebus, dan pes sambal rahsia istimewa.',
+                image: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&q=80&w=400',
+                rating: 4.7
+            },
+            {
+                id: 'm3',
+                name: 'Nasi Bujang',
+                category: 'snek',
+                price: 4.00,
+                desc: 'Nasi putih panas dihidang bersama telur dadar, sup kosong, sambal belacan berapi dan ulam timun.',
+                image: 'PASSPORTZIKRYCROP35x45 mm.jpg',
+                rating: 4.8
+            },
+            {
+                id: 'm4',
+                name: 'Nasi Goreng Biasa',
+                category: 'snek',
+                price: 5.00,
+                desc: 'Nasi goreng klasik dengan telur hancur, sayur kubis, lobak merah dan aroma tumisan bawang yang harum.',
+                image: 'https://images.unsplash.com/photo-1596797038530-2c107229654b?auto=format&fit=crop&q=80&w=400',
+                rating: 4.7
+            },
+            {
+                id: 'm5',
+                name: 'Nasi Goreng Cili Padi',
+                category: 'snek',
+                price: 6.00,
+                desc: 'Nasi goreng pedas power dengan tumbukan cili padi kampung segar, ikan bilis garing dan telur dadar.',
+                image: 'https://images.unsplash.com/photo-1626804475315-00c474360698?auto=format&fit=crop&q=80&w=400',
+                rating: 4.9
+            },
+            {
+                id: 'c1',
+                name: 'Signature Latte',
+                category: 'kopi',
+                price: 12.00,
+                desc: 'Espresso premium digabungkan dengan susu berkrim berkualiti tinggi.',
+                image: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&q=80&w=400',
+                rating: 4.9
+            },
+            {
+                id: 'c2',
+                name: 'Espresso Solo',
+                category: 'kopi',
+                price: 8.00,
+                desc: 'Sari pati kopi tulen pekat daripada biji kopi Arabika pilihan.',
+                image: 'https://images.unsplash.com/photo-1510707513156-46272652194c?auto=format&fit=crop&q=80&w=400',
+                rating: 4.7
+            },
+            {
+                id: 'c3',
+                name: 'Spanish Latte',
+                category: 'kopi',
+                price: 13.00,
+                desc: 'Latte manis dengan suntikan susu pekat premium ala Sepanyol.',
+                image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&q=80&w=400',
+                rating: 4.8
+            },
+            {
+                id: 'nc1',
+                name: 'Matcha Uji Latte',
+                category: 'bukan-kopi',
+                price: 14.00,
+                desc: 'Teh hijau Matcha asli dari Uji, Jepun berkrim manis.',
+                image: 'https://images.unsplash.com/photo-1536256263959-770b48d82b0a?auto=format&fit=crop&q=80&w=400',
+                rating: 4.9
+            },
+            {
+                id: 'nc2',
+                name: 'Coklat Mewah',
+                category: 'bukan-kopi',
+                price: 12.00,
+                desc: 'Serbuk koko gelap pekat premium bersama susu berkrim panas.',
+                image: 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&q=80&w=400',
+                rating: 4.6
+            },
+            {
+                id: 's1',
+                name: 'Butter Croissant',
+                category: 'snek',
+                price: 9.00,
+                desc: 'Roti mentega rangup berlapis di luar, lembut di dalam.',
+                image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&q=80&w=400',
+                rating: 4.8
+            },
+            {
+                id: 's2',
+                name: 'Chocolate Muffin',
+                category: 'snek',
+                price: 8.50,
+                desc: 'Mufin coklat premium lembut berlimpah cip coklat cair.',
+                image: 'https://images.unsplash.com/photo-1607958996333-41aef7caefaa?auto=format&fit=crop&q=80&w=400',
+                rating: 4.5
+            }
+        ];
+
+        // Seed Reviews (Mock Reviews)
+        let reviewsData = [
+            {
+                id: 1,
+                name: 'Fakhrul',
+                rating: 5,
+                comment: 'Signature Latte dekat sini memang tak pernah mengecewakan. Nasi Lemak Ayam Goreng pun rangup gila!',
+                date: 'Baru seketika tadi'
+            },
+            {
+                id: 2,
+                name: 'Nur Syafiqah',
+                rating: 4,
+                comment: 'Nasi lemak ayam dia mantap, tambah nasi dengan sambal lebih baru puas makan. Highly recommended!',
+                date: '1 jam yang lalu'
+            },
+            {
+                id: 3,
+                name: 'Adrian',
+                rating: 5,
+                comment: 'Sistem order guna website ni laju gila, tak payah beratur panjang.',
+                date: 'Semalam'
+            }
+        ];
+
+        // Cart State
+        let cart = [];
+        let activeCategory = 'semua';
+        let currentFormRating = 5;
+        
+        // Customization State
+        let selectedItemForCustom = null;
+        let customizeQty = 1;
+
+        // INIT ON LOAD
+        window.onload = function() {
+            renderMenu();
+            renderReviews();
+            updateRatingStarsUI();
+            updateCartUI();
+        }
+
+        // RENDER MENU
+        function renderMenu() {
+            const container = document.getElementById('menu-container');
+            container.innerHTML = '';
+
+            const filteredMenu = activeCategory === 'semua' 
+                ? MENU_DATA 
+                : MENU_DATA.filter(item => item.category === activeCategory);
+
+            filteredMenu.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-2xl overflow-hidden border border-stone-100 shadow-xs hover:shadow-md transition duration-300 flex flex-col";
+                card.innerHTML = `
+                    <!-- Interactive Image Container with Hover Indicator -->
+                    <div onclick="openCustomizeModal('${item.id}')" class="relative h-44 overflow-hidden bg-stone-100 cursor-pointer group">
+                        <img src="${item.image}" alt="${item.name}" onerror="this.src='https://placehold.co/400x300/7c4627/ffffff?text=${encodeURIComponent(item.name)}'" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        
+                        <!-- Premium Dark Glassmorphism Hover Overlay -->
+                        <div class="absolute inset-0 bg-cafe-900/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center text-white font-bold text-xs gap-1.5 z-10">
+                            <span class="w-10 h-10 bg-white text-cafe-900 rounded-full flex items-center justify-center shadow-lg transform translate-y-3 group-hover:translate-y-0 transition duration-300">
+                                <i class="fa-solid fa-plus text-base animate-pulse"></i>
+                            </span>
+                            <span class="transform translate-y-3 group-hover:translate-y-0 transition duration-300 tracking-wide">Pesan Hidangan</span>
+                        </div>
+
+                        <!-- Menu Item Rating Badge -->
+                        <span class="absolute top-3 right-3 bg-white/95 backdrop-blur-xs px-2 py-1 rounded-lg text-[11px] font-bold text-stone-700 shadow-sm flex items-center space-x-1 z-20">
+                            <i class="fa-solid fa-star text-amber-500 text-[10px]"></i>
+                            <span>${item.rating}</span>
+                        </span>
+                    </div>
+                    <div class="p-4 flex-grow flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start gap-2">
+                                <h3 class="font-bold text-stone-900 text-base">${item.name}</h3>
+                                <span class="text-cafe-700 font-extrabold text-sm whitespace-nowrap">RM ${item.price.toFixed(2)}</span>
+                            </div>
+                            <p class="text-xs text-stone-500 mt-2 leading-relaxed line-clamp-2">${item.desc}</p>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // FILTER MENU
+        function filterMenu(category) {
+            activeCategory = category;
+            
+            // Toggle active visual states on category buttons
+            const buttons = document.querySelectorAll('.cat-btn');
+            buttons.forEach(btn => {
+                if (btn.getAttribute('data-cat') === category) {
+                    btn.className = "cat-btn px-4 py-2 text-xs font-bold rounded-xl bg-cafe-900 text-white transition duration-300";
+                } else {
+                    btn.className = "cat-btn px-4 py-2 text-xs font-bold rounded-xl bg-white text-stone-600 hover:bg-stone-100 border border-stone-200 transition duration-300";
+                }
+            });
+
+            renderMenu();
+        }
+
+        // CART LOGIC
+        function toggleCartDrawer() {
+            const drawer = document.getElementById('cart-drawer');
+            const overlay = document.getElementById('drawer-overlay');
+            
+            if (drawer.classList.contains('translate-x-full')) {
+                drawer.classList.remove('translate-x-full');
+                overlay.classList.remove('hidden');
+                document.body.style.overflow = 'hidden'; // block page scroll
+            } else {
+                drawer.classList.add('translate-x-full');
+                overlay.classList.add('hidden');
+                document.body.style.overflow = ''; // allow scroll
+            }
+        }
+
+        // CUSTOMIZE ORDER MODAL LOGIC
+        function openCustomizeModal(itemId) {
+            const item = MENU_DATA.find(i => i.id === itemId);
+            if (!item) return;
+
+            selectedItemForCustom = item;
+            customizeQty = 1;
+            
+            // Populate Modal Content
+            document.getElementById('cust-item-image').src = item.image;
+            document.getElementById('cust-item-image').onerror = function() {
+                this.src = `https://placehold.co/400x300/7c4627/ffffff?text=${encodeURIComponent(item.name)}`;
+            };
+            document.getElementById('cust-item-name').innerText = item.name;
+            document.getElementById('cust-item-desc').innerText = item.desc;
+            document.getElementById('cust-qty').innerText = customizeQty;
+            document.getElementById('cust-note').value = '';
+
+            // Reset checkboxes
+            document.getElementById('opt-nasi-lebih').checked = false;
+            document.getElementById('opt-lauk-lebih').checked = false;
+
+            // Recalculate price
+            updateModalPrice();
+
+            // Show Modal
+            const modal = document.getElementById('customize-modal');
+            const modalContent = document.getElementById('customize-modal-content');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
+            }, 50);
+        }
+
+        function closeCustomizeModal() {
+            const modal = document.getElementById('customize-modal');
+            const modalContent = document.getElementById('customize-modal-content');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 150);
+            selectedItemForCustom = null;
+        }
+
+        // UPDATE DYNAMIC MODAL PRICE BASED ON SELECTIONS
+        function updateModalPrice() {
+            if (!selectedItemForCustom) return;
+
+            let unitPrice = selectedItemForCustom.price;
+            const nasiLebih = document.getElementById('opt-nasi-lebih').checked;
+            const laukLebih = document.getElementById('opt-lauk-lebih').checked;
+
+            if (nasiLebih) unitPrice += 1.00;
+            if (laukLebih) unitPrice += 2.00;
+
+            const finalCalculatedPrice = unitPrice * customizeQty;
+            document.getElementById('cust-item-price').innerText = `RM ${finalCalculatedPrice.toFixed(2)}`;
+        }
+
+        function adjustCustomizeQty(adjustment) {
+            customizeQty += adjustment;
+            if (customizeQty < 1) customizeQty = 1;
+            document.getElementById('cust-qty').innerText = customizeQty;
+            updateModalPrice();
+        }
+
+        function confirmAddToCart() {
+            if (!selectedItemForCustom) return;
+
+            const noteText = document.getElementById('cust-note').value.trim();
+            const itemId = selectedItemForCustom.id;
+            const nasiLebih = document.getElementById('opt-nasi-lebih').checked;
+            const laukLebih = document.getElementById('opt-lauk-lebih').checked;
+
+            // Calculate exact unit price including add-ons selected
+            let finalUnitPrice = selectedItemForCustom.price;
+            if (nasiLebih) finalUnitPrice += 1.00;
+            if (laukLebih) finalUnitPrice += 2.00;
+
+            // Generate unique cart key based on item, notes and selected add-on states so items don't merge wrongly
+            const cartKey = `${itemId}_${noteText}_${nasiLebih}_${laukLebih}`;
+
+            const existingItem = cart.find(i => i.cartKey === cartKey);
+            if (existingItem) {
+                existingItem.quantity += customizeQty;
+            } else {
+                cart.push({
+                    cartKey: cartKey,
+                    id: itemId,
+                    name: selectedItemForCustom.name,
+                    price: finalUnitPrice,
+                    image: selectedItemForCustom.image,
+                    quantity: customizeQty,
+                    note: noteText,
+                    nasiLebih: nasiLebih,
+                    laukLebih: laukLebih
+                });
+            }
+
+            updateCartUI();
+            closeCustomizeModal();
+
+            // Pop the cart badge count creatively
+            const badge = document.getElementById('cart-badge');
+            badge.classList.remove('scale-0');
+            badge.classList.add('scale-110');
+            setTimeout(() => {
+                badge.classList.remove('scale-110');
+            }, 300);
+        }
+
+        function updateCartQuantity(cartKey, adjustment) {
+            const item = cart.find(i => i.cartKey === cartKey);
+            if (!item) return;
+
+            item.quantity += adjustment;
+            if (item.quantity <= 0) {
+                cart = cart.filter(i => i.cartKey !== cartKey);
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cart-items-container');
+            const subtotalEl = document.getElementById('cart-subtotal');
+            const totalEl = document.getElementById('cart-total');
+            const badge = document.getElementById('cart-badge');
+            const checkoutBtn = document.getElementById('checkout-btn');
+
+            container.innerHTML = '';
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="h-full flex flex-col items-center justify-center text-center p-6 space-y-3">
+                        <div class="w-16 h-16 bg-stone-50 text-stone-300 rounded-full flex items-center justify-center">
+                            <i class="fa-solid fa-shopping-basket text-2xl"></i>
+                        </div>
+                        <p class="text-sm font-semibold text-stone-500">Troli anda masih kosong.</p>
+                        <button onclick="toggleCartDrawer()" class="px-4 py-2 bg-cafe-100 text-cafe-900 text-xs font-bold rounded-lg hover:bg-cafe-200 transition">
+                            Pilih Menu Sekarang
+                        </button>
+                    </div>
+                `;
+                subtotalEl.innerText = 'RM 0.00';
+                totalEl.innerText = 'RM 0.00';
+                badge.innerText = '0';
+                badge.classList.add('scale-0');
+                checkoutBtn.disabled = true;
+                return;
+            }
+
+            checkoutBtn.disabled = false;
+            let subtotal = 0;
+            let totalItems = 0;
+
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                totalItems += item.quantity;
+
+                // Render customized addon labels
+                let addonsHTML = '';
+                if (item.nasiLebih || item.laukLebih) {
+                    addonsHTML += `<div class="flex flex-wrap gap-1 mt-1.5">`;
+                    if (item.nasiLebih) {
+                        addonsHTML += `<span class="bg-amber-100 text-amber-900 text-[10px] px-2 py-0.5 rounded font-bold border border-amber-200">+ Nasi Lebih</span>`;
+                    }
+                    if (item.laukLebih) {
+                        addonsHTML += `<span class="bg-amber-100 text-amber-900 text-[10px] px-2 py-0.5 rounded font-bold border border-amber-200">+ Lauk/Sambal/Kuah Lebih</span>`;
+                    }
+                    addonsHTML += `</div>`;
+                }
+
+                // Render note template if customer specified any
+                const noteBadgeHTML = item.note 
+                    ? `<div class="bg-stone-200 text-stone-700 text-[10px] px-2 py-0.5 rounded-md mt-1 italic font-medium inline-block max-w-full truncate">
+                         Nota: "${item.note}"
+                       </div>` 
+                    : '';
+
+                const itemRow = document.createElement('div');
+                itemRow.className = "flex items-start justify-between p-3.5 bg-stone-50 rounded-xl border border-stone-100 gap-3";
+                itemRow.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" onerror="this.src='https://placehold.co/100x100/7c4627/ffffff?text=${encodeURIComponent(item.name)}'" class="w-12 h-12 rounded-lg object-cover bg-stone-200 shrink-0">
+                    <div class="flex-grow min-w-0">
+                        <h4 class="text-xs font-bold text-stone-900 truncate">${item.name}</h4>
+                        <p class="text-xs text-cafe-700 font-semibold mt-0.5">RM ${item.price.toFixed(2)} <span class="text-stone-400 font-normal">/ seunit</span></p>
+                        ${addonsHTML}
+                        ${noteBadgeHTML}
+                    </div>
+                    <div class="flex items-center space-x-2 shrink-0 self-center">
+                        <button onclick="updateCartQuantity('${item.cartKey}', -1)" class="w-7 h-7 bg-white hover:bg-stone-100 rounded-lg text-xs font-bold border border-stone-200 flex items-center justify-center transition">-</button>
+                        <span class="text-xs font-bold text-stone-800 w-4 text-center">${item.quantity}</span>
+                        <button onclick="updateCartQuantity('${item.cartKey}', 1)" class="w-7 h-7 bg-white hover:bg-stone-100 rounded-lg text-xs font-bold border border-stone-200 flex items-center justify-center transition">+</button>
+                    </div>
+                `;
+                container.appendChild(itemRow);
+            });
+
+            subtotalEl.innerText = `RM ${subtotal.toFixed(2)}`;
+            totalEl.innerText = `RM ${subtotal.toFixed(2)}`;
+            badge.innerText = totalItems;
+            badge.classList.remove('scale-0');
+        }
+
+        // CHECKOUT ACTION
+        function triggerCheckout() {
+            if (cart.length === 0) return;
+
+            const totalAmount = document.getElementById('cart-total').innerText;
+            const randomOrderId = '#KC-' + Math.floor(1000 + Math.random() * 9000);
+
+            // Populate mock receipt data inside checkout modal
+            document.getElementById('receipt-order-id').innerText = randomOrderId;
+            document.getElementById('receipt-total-paid').innerText = totalAmount;
+
+            // Open Checkout success screen
+            const modal = document.getElementById('checkout-modal');
+            const modalContent = document.getElementById('checkout-modal-content');
+            
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
+            }, 50);
+
+            // Clear Cart immediately after successful mock transaction
+            cart = [];
+            updateCartUI();
+            toggleCartDrawer(); // Close drawer
+        }
+
+        function closeCheckoutModal() {
+            const modal = document.getElementById('checkout-modal');
+            modal.classList.add('hidden');
+        }
+
+        // REVIEW SYSTEMS LOGIC
+        function setRating(rating) {
+            currentFormRating = rating;
+            document.getElementById('selected-rating').value = rating;
+            updateRatingStarsUI();
+        }
+
+        function updateRatingStarsUI() {
+            const stars = document.querySelectorAll('.star-btn');
+            stars.forEach((star, index) => {
+                if (index < currentFormRating) {
+                    star.className = "star-btn text-amber-500 scale-110 transition";
+                } else {
+                    star.className = "star-btn text-stone-300 transition";
+                }
+            });
+        }
+
+        function handleReviewSubmit(e) {
+            e.preventDefault();
+
+            const nameInput = document.getElementById('reviewer-name');
+            const textInput = document.getElementById('reviewer-text');
+            const ratingInput = document.getElementById('selected-rating');
+
+            if (!nameInput.value.trim() || !textInput.value.trim()) return;
+
+            const newReview = {
+                id: Date.now(),
+                name: nameInput.value.trim(),
+                rating: parseInt(ratingInput.value),
+                comment: textInput.value.trim(),
+                date: 'Baru seketika tadi'
+            };
+
+            // Prepend new review to the list
+            reviewsData.unshift(newReview);
+            
+            // Render list & refresh input states
+            renderReviews();
+            
+            // Clear Form
+            nameInput.value = '';
+            textInput.value = '';
+            setRating(5); // Reset stars to default max
+        }
+
+        function renderReviews() {
+            const feed = document.getElementById('reviews-feed');
+            const averageBadge = document.getElementById('average-rating-badge');
+            feed.innerHTML = '';
+
+            if (reviewsData.length === 0) {
+                feed.innerHTML = `
+                    <div class="p-6 text-center text-stone-400 text-xs">
+                        Tiada ulasan lagi. Jadi yang pertama memberi ulasan!
+                    </div>
+                `;
+                averageBadge.innerText = '0.0 / 5.0';
+                return;
+            }
+
+            let sumOfRatings = 0;
+
+            reviewsData.forEach(review => {
+                sumOfRatings += review.rating;
+
+                // Render Stars string
+                let starsHTML = '';
+                for (let i = 1; i <= 5; i++) {
+                    if (i <= review.rating) {
+                        starsHTML += '<i class="fa-solid fa-star text-amber-500 text-xs"></i>';
+                    } else {
+                        starsHTML += '<i class="fa-regular fa-star text-stone-300 text-xs"></i>';
+                    }
+                }
+
+                const reviewCard = document.createElement('div');
+                reviewCard.className = "bg-stone-50 p-4 rounded-xl border border-stone-100 flex items-start gap-3 transition hover:border-cafe-200 duration-200";
+                reviewCard.innerHTML = `
+                    <div class="w-10 h-10 rounded-full bg-cafe-900 text-white font-bold flex items-center justify-center text-xs shrink-0">
+                        ${review.name.charAt(0).toUpperCase()}
+                    </div>
+                    <div class="flex-grow space-y-1">
+                        <div class="flex items-center justify-between">
+                            <h4 class="font-bold text-sm text-stone-900">${review.name}</h4>
+                            <span class="text-[10px] text-stone-400 font-medium">${review.date}</span>
+                        </div>
+                        <div class="flex space-x-1">${starsHTML}</div>
+                        <p class="text-stone-600 text-xs leading-relaxed pt-1">${review.comment}</p>
+                    </div>
+                `;
+                feed.appendChild(reviewCard);
+            });
+
+            // Calculate live Average Rating score
+            const average = (sumOfRatings / reviewsData.length).toFixed(1);
+            averageBadge.innerHTML = `<i class="fa-solid fa-star text-amber-500"></i> <span>${average} / 5.0</span>`;
+        }
+    </script>
+</body>
+</html>
